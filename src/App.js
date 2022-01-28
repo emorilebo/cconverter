@@ -7,22 +7,34 @@ const BASE_URL =
 
 export default function App() {
   const [currencyOptions, setCurrencyOptions] = useState([]);
-  console.log(currencyOptions);
+  const [fromCurrency, setFromCurrency] = useState();
+  const [toCurrency, setToCurrency] = useState();
 
   useEffect(() => {
     fetch(BASE_URL)
       .then((res) => res.json())
       .then((data) => {
+        const firstCurrency = Object.keys(data.rates)[0];
         setCurrencyOptions([data.base, ...Object.keys(data.rates)]);
+        setFromCurrency(data.base);
+        setToCurrency(firstCurrency);
       });
   }, []);
   return (
     <div>
       <h1>Currency Converter</h1>
       <div className="flex">
-        <CurrencyRow title={"From"} currencyOptions={currencyOptions} />
+        <CurrencyRow
+          title={"From"}
+          currencyOptions={currencyOptions}
+          selectedCurrency={fromCurrency}
+        />
         <div className="equals">=</div>
-        <CurrencyRow title={"To"} currencyOptions={currencyOptions} />
+        <CurrencyRow
+          title={"To"}
+          currencyOptions={currencyOptions}
+          selectedCurrency={toCurrency}
+        />
       </div>
     </div>
   );
