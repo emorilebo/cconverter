@@ -1,59 +1,89 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import CurrencyRow from "./CurrencyRow";
+import CurrencyRoww from "./CurrencyRoww";
 
 const BASE_URL =
   "http://api.exchangeratesapi.io/v1/latest?access_key=a16fbb7a7037ce68996401d86f90b197";
 
 export default function App() {
-  const [currencyOptions, setCurrencyOptions] = useState([]);
-  const [fromCurrency, setFromCurrency] = useState();
-  const [toCurrency, setToCurrency] = useState();
-  const [exchangeRate, setExchangeRate] = useState();
-  const [amount, setAmount] = useState(1);
-  const [amountInFromCurrency, setAmountInFromCurrency] = useState(true);
 
-  let toAmount, fromAmount;
-  if (amountInFromCurrency) {
-    fromAmount = amount;
-    toAmount = amount * exchangeRate;
-  } else {
-    toAmount = amount;
-    fromAmount = amount / exchangeRate;
-  }
-
-  useEffect(() => {
-    fetch(BASE_URL)
-      .then((res) => res.json())
-      .then((data) => {
-        const firstCurrency = Object.keys(data.rates)[0];
-        setCurrencyOptions([data.base, ...Object.keys(data.rates)]);
-        setFromCurrency(data.base);
-        setToCurrency(firstCurrency);
-        setExchangeRate(data.rates[firstCurrency]);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (fromCurrency != null && toCurrency != null) {
-      fetch(`${BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}`)
-        .then((res) => res.json())
-        .then((data) => setExchangeRate(data.rates[toCurrency]));
-    }
-  }, [fromCurrency, toCurrency]);
-
-  function handleFromAmountChange(e) {
-    setAmount(e.target.value);
-    setAmountInFromCurrency(true);
-  }
-
-  function handleToAmountChange(e) {
-    setAmount(e.target.value);
-    setAmountInFromCurrency(false);
-  }
   return (
     <div>
-      <h1>Currency Converter</h1>
+    <h1>Currency Converter</h1>
+    <CurrencyRoww inputType='From'/>
+    <CurrencyRoww inputType='To'/>
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//const [currencyOptions, setCurrencyOptions] = useState([]);
+  // const [fromCurrency, setFromCurrency] = useState();
+  // const [toCurrency, setToCurrency] = useState();
+  // const [exchangeRate, setExchangeRate] = useState();
+  // const [amount, setAmount] = useState(1);
+  // const [amountInFromCurrency, setAmountInFromCurrency] = useState(true);
+
+  // let toAmount, fromAmount;
+  // if (amountInFromCurrency) {
+  //   fromAmount = amount;
+  //   toAmount = amount * exchangeRate;
+  // } else {
+  //   toAmount = amount;
+  //   fromAmount = amount / exchangeRate;
+  // }
+
+  // useEffect(() => {
+  //   fetch(BASE_URL)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       const firstCurrency = Object.keys(data.rates)[0];
+  //       setCurrencyOptions([data.base, ...Object.keys(data.rates)]);
+  //       setFromCurrency(data.base);
+  //       setToCurrency(firstCurrency);
+  //       setExchangeRate(data.rates[firstCurrency]);
+  //     });
+  // }, []);
+
+  // useEffect(() => {
+  //   if (fromCurrency != null && toCurrency != null) {
+  //     fetch(`${BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}`)
+  //       .then((res) => res.json())
+  //       .then((data) => setExchangeRate(data.rates[toCurrency]));
+  //   }
+  // }, [fromCurrency, toCurrency]);
+
+  // function handleFromAmountChange(e) {
+  //   setAmount(e.target.value);
+  //   setAmountInFromCurrency(true);
+  // }
+
+  // function handleToAmountChange(e) {
+  //   setAmount(e.target.value);
+  //   setAmountInFromCurrency(false);
+  // }
+
+    {/* <h1>Currency Converter</h1>
       <div className="flex">
         <CurrencyRow
           title={"From"}
@@ -72,7 +102,4 @@ export default function App() {
           onChangeAmount={handleToAmountChange}
           amount={toAmount}
         />
-      </div>
-    </div>
-  );
-}
+      </div> */}
