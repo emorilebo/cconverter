@@ -34,14 +34,22 @@ export default function App() {
       });
   }, []);
 
-  function handleFromAmountChange(e){
-    setAmount(e.target.value)
-    setAmountInFromCurrency(true)
+  useEffect(() => {
+    if (fromCurrency != null && toCurrency != null) {
+      fetch(`${BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}`)
+        .then((res) => res.json())
+        .then((data) => setExchangeRate(data.rates[toCurrency]));
+    }
+  }, [fromCurrency, toCurrency]);
+
+  function handleFromAmountChange(e) {
+    setAmount(e.target.value);
+    setAmountInFromCurrency(true);
   }
 
-  function handleToAmountChange(e){
-    setAmount(e.target.value)
-    setAmountInFromCurrency(false)
+  function handleToAmountChange(e) {
+    setAmount(e.target.value);
+    setAmountInFromCurrency(false);
   }
   return (
     <div>
